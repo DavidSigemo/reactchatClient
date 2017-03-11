@@ -1,0 +1,25 @@
+.myNav {
+    margin-bottom: 51px;
+}
+
+.pageContent{
+    margin-top: 50px;
+}
+
+#chatbox {
+    text-align:left;
+    margin:0 auto;
+    margin-bottom:25px;
+    padding:10px;
+    background:#fff;
+    height:270px;
+    width:430px;
+    border:1px solid #ACD8F0;
+    overflow:auto; 
+}
+
+.contacts {
+    border: 1px solid darkgrey;
+    border-radius: 3px;
+    margin: 3px;
+}
