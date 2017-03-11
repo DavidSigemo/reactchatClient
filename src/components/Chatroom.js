@@ -25,7 +25,7 @@ export default class Chatroom extends React.Component {
     render() {
         //this.getConnectionCount();
         return (
-            <div className="chatroom1">
+            <div className="chatroom">
                 <h1>{this.props.RoomName}</h1>
                 <h2>{this.state.ConnectionCount}</h2>
                 <Button disabled={this.state.Locked} onClick={this.getConnectionCount}>Enter</Button>
