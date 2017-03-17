@@ -35,19 +35,7 @@ export default class Chatrooms extends React.Component {
 
     render() {
         var chatrooms = this.state.chatrooms.map((chatroom) => {
-            return <Chatroom key = {
-                chatroom.ChatroomId
-            }
-            RoomName = {
-                chatroom.RoomName
-            }
-            UserConnections = {
-                chatroom.UserConnections
-            }
-            Locked = {
-                chatroom.Locked
-            }
-            />
+            return <Chatroom key={chatroom.Id.toString()} RoomName={chatroom.RoomName} Locked={chatroom.Locked} Password={chatroom.Password} />
         });
         return ( <div>{chatrooms}</div>);
     }
