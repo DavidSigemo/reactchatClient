@@ -28,9 +28,8 @@ export default class Layout extends React.Component {
     }
 
     componentWillMount() {
-        var connection = $.hubConnection('http://localhost:53356/signalr');
+        var connection = $.hubConnection('http://reactchatapi.azurewebsites.net');
         var proxy = connection.createHubProxy('messageHub');
-
         // receives broadcast messages from a hub function, called "broadcastMessage"
         proxy.on('pushNewMessage', function (message) {
             console.log("incoming message", message);
@@ -44,13 +43,14 @@ export default class Layout extends React.Component {
         connection.start({ jsonp: true })
             .done(function () {
                 console.log('Now connected, connection ID=' + connection.id);
-                // proxy.invoke('Test',"Pannkaka").done(function () {
-                //     console.log('Invocation of Test succeeded');
-                // }).fail(function (error) {
-                //     console.log('Invocation of Test failed. Error: ' + error);
-                // });
+                proxy.invoke('Test',"Asdf").done(function () {
+                    console.log('Invocation of Test succeeded');
+                }).fail(function (error) {
+                    console.log('Invocation of Test failed. Error: ' + error);
+                });
                 localStorage.setItem("connectionId", connection.id);
                 console.log("localStorage: " + localStorage.getItem("connectionId"));
+
                 //console.log(this.state.connectionId);
                 //proxy.server.SendMessage("test", "message");
             })
