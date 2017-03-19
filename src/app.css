@@ -1,9 +1,19 @@
+body {
+    background-color: whitesmoke;
+}
+
 .myNav {
     margin-bottom: 51px;
 }
 
+.container {
+
+}
+
 .pageContent{
-    margin-top: 50px;
+    margin-top: 75px;
+    background-color: #fcfcfc ;
+    border-radius: 8px;
 }
 
 #chatbox {
@@ -22,4 +32,70 @@
     border: 1px solid darkgrey;
     border-radius: 3px;
     margin: 3px;
+}
+
+.chatroomTile {
+    border: 1px solid darkgray;
+    border-radius: 5px;
+    box-sizing: border-box;
+    min-width: 225px;
+    max-width: 300px;
+    margin: 5px;
+    padding: 0;
+    background-color: whitesmoke;
+}
+
+.chatroomTile_Title{
+        border-bottom: 1px solid darkgray;
+
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background-color: lightgray;
+    height: 50px;
+}
+
+.chatroomTile_Title h2{
+    margin: 0;
+    padding: 8.5px 5px 8.5px 10px;
+}
+
+.hidden {
+    display: none;
+}
+
+.chatroomEnter {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    width: 75px;
+    height: 55px;
+}
+
+.chatroomTile_Content {
+    padding: 5px;
+    height: 100px;
+}
+
+.chatroomTile_Footer {
+    height: 65px;
+    position: relative;
+    background-color: lightgray;
+    border-top: 1px solid darkgray;
+    border-bottom: 1px solid darkgray;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    bottom: -1px;
+    box-sizing: border-box;
+}
+
+.navbar-brand, .chatroomEnterLink{
+    list-style: none;
+}
+
+.navbar-brand a{
+    color: #9d9d9d;
+}
+
+.chatroomEnterLink a {
+    color: #777;
 }

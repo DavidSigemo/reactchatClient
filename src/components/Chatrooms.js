@@ -1,10 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Chatroom from './Chatroom';
+import CreateChatroom from './CreateChatroom'
 import Axios from 'axios';
 import {
     Button,
-    Col
+    Col,
+    Row
 } from 'react-bootstrap';
 require('jquery');
 require('ms-signalr-client');
@@ -35,8 +37,16 @@ export default class Chatrooms extends React.Component {
 
     render() {
         var chatrooms = this.state.chatrooms.map((chatroom) => {
-            return <Chatroom key={chatroom.Id.toString()} RoomName={chatroom.RoomName} Locked={chatroom.Locked} Password={chatroom.Password} />
+            return <Chatroom key={chatroom.Id.toString()} Id={chatroom.Id} Name={chatroom.Name} Description={chatroom.Description} Locked={chatroom.Locked} Password={chatroom.Password} />
         });
-        return ( <div>{chatrooms}</div>);
+        return (
+            <div className="container-fluid">
+                <h1>All chatrooms</h1>
+                <CreateChatroom />
+                <div className="row">
+                    {chatrooms}
+                </div>
+            </div>
+            );
     }
 }

@@ -6,19 +6,24 @@ import { Button, ButtonGroup } from 'react-bootstrap';
 import CreateChatroom from './components/CreateChatroom';
 import Layout from './components/Layout';
 import Chatrooms from './components/Chatrooms';
+import Frontpage from './components/Frontpage';
+import ChatWindow from './components/ChatWindow';
 import Settings from './components/Settings';
 import ConnectionHandler from './components/ConnectionHandler';
 import Axios from 'axios';
 import './app.css';
-import { Router, Route, IndexRoute, hashHistory} from "react-router";
+import { Router, Route, IndexRoute, hashHistory, browserHistory} from "react-router";
 
 
 // ReactDOM.render(<ContactBook contacts={contacts}/>, document.getElementById("main"));
 ReactDOM.render(
-    <Router history={hashHistory}>
-            <Route path="/" component={Layout}>
-                <IndexRoute component={Chatrooms}></IndexRoute>
-                <Route path="chatrooms" component={CreateChatroom}></Route>
-                <Route path="settings" component={Settings}></Route>
-            </Route>
-    </Router>, document.getElementById("main"));
+    <Router history={browserHistory}>
+        <Route path="/" component={Layout}>
+            <IndexRoute component={Frontpage} />
+            <Route name="home" path="/home" component={Frontpage}></Route>
+            <Route name="chatrooms" path="/chatrooms" component={Chatrooms}></Route>
+            <Route name="settings" path="/settings" component={Settings}></Route>
+            <Route name="room" path="/room/:id" component={ChatWindow}></Route>
+        </Route>
+    </Router>, document.getElementById("main")
+);

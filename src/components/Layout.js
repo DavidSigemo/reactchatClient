@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
+import ConnectionHandler from './ConnectionHandler';
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem, FormGroup, FormControl, Button, Modal, OverlayTrigger, Popover, Tooltip, Form, Col, ControlLabel, Checkbox, HelpBlock } from 'react-bootstrap';
 require('jquery');
 require('ms-signalr-client');
@@ -27,39 +28,39 @@ export default class Layout extends React.Component {
         this.activatePasswordValidation = this.activatePasswordValidation.bind(this);
     }
 
-    componentWillMount() {
-        var connection = $.hubConnection('http://reactchatapi.azurewebsites.net');
-        var proxy = connection.createHubProxy('messageHub');
-        // receives broadcast messages from a hub function, called "broadcastMessage"
-        proxy.on('pushNewMessage', function (message) {
-            console.log("incoming message", message);
-        });
+    // componentWillMount() {
+    //     var connection = $.hubConnection('http://reactchatapi.azurewebsites.net');
+    //     var proxy = connection.createHubProxy('messageHub');
+    //     // receives broadcast messages from a hub function, called "broadcastMessage"
+    //     proxy.on('pushNewMessage', function (message) {
+    //         console.log("incoming message", message);
+    //     });
 
-        proxy.on('Test', function (message) {
-            console.log("testing", message);
-        });
+    //     proxy.on('Test', function (message) {
+    //         console.log("testing", message);
+    //     });
 
-        // atempt connection, and handle errors
-        connection.start({ jsonp: true })
-            .done(function () {
-                console.log('Now connected, connection ID=' + connection.id);
-                proxy.invoke('Test',"Asdf").done(function () {
-                    console.log('Invocation of Test succeeded');
-                }).fail(function (error) {
-                    console.log('Invocation of Test failed. Error: ' + error);
-                });
-                localStorage.setItem("connectionId", connection.id);
-                console.log("localStorage: " + localStorage.getItem("connectionId"));
+    //     // atempt connection, and handle errors
+    //     connection.start({ jsonp: true })
+    //         .done(function () {
+    //             console.log('Now connected, connection ID=' + connection.id);
+    //             proxy.invoke('Test',"Asdf").done(function () {
+    //                 console.log('Invocation of Test succeeded');
+    //             }).fail(function (error) {
+    //                 console.log('Invocation of Test failed. Error: ' + error);
+    //             });
+    //             localStorage.setItem("connectionId", connection.id);
+    //             console.log("localStorage: " + localStorage.getItem("connectionId"));
 
-                //console.log(this.state.connectionId);
-                //proxy.server.SendMessage("test", "message");
-            })
-            .fail(function () { console.log('Could not connect'); });
-    }
+    //             //console.log(this.state.connectionId);
+    //             //proxy.server.SendMessage("test", "message");
+    //         })
+    //         .fail(function () { console.log('Could not connect'); });
+    // }
 
-    componentDidMount() {
-        console.log("componentDidMount: " + localStorage.getItem("connectionId"));
-    }
+    // componentDidMount() {
+    //     console.log("componentDidMount: " + localStorage.getItem("connectionId"));
+    // }
 
     close() {
         this.setState({ showModal: false });
@@ -140,20 +141,23 @@ export default class Layout extends React.Component {
 
         return (
             <div>
+                <ConnectionHandler />
                 <Navbar className="myNav" inverse fixedTop>
                     <Navbar.Header>
                         <Navbar.Brand>
-                            <a href="#">ReactChat</a>
+                            <LinkContainer to={{ pathname: 'home' }}>
+                                <NavItem eventKey={1} href="">Chatrooms</NavItem>
+                            </LinkContainer>
                         </Navbar.Brand>
                         <Navbar.Toggle />
                     </Navbar.Header>
                     <Navbar.Collapse>
                         <Nav>
                             <LinkContainer to={{ pathname: 'chatrooms' }}>
-                                <NavItem eventKey={1} href="#">Chatrooms</NavItem>
+                                <NavItem eventKey={2} href="#">Chatrooms</NavItem>
                             </LinkContainer>
                             <LinkContainer to={{ pathname: 'settings' }}>
-                                <NavItem eventKey={2} href="#">Users</NavItem>
+                                <NavItem eventKey={3} href="#">Users</NavItem>
                             </LinkContainer>
                         </Nav>
                         <Nav pullRight>

@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
 
 export default class CreateChatroom extends React.Component {
     constructor(props) {
+        console.log("test");
         super(props);
 
     }
@@ -10,7 +12,7 @@ export default class CreateChatroom extends React.Component {
     render() {
         return (
             <div>
-                <h1>Create Chatroom</h1>
+                <p>Want to create your own chatroom? <a href="">Click here</a></p>
             </div>
         );
     }

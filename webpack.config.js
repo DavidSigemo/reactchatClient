@@ -7,6 +7,13 @@ module.exports = {
         path: __dirname,
         filename: 'bundle.js'
     },
+    devServer: {
+        hot: true,
+        port: 8080,
+        colors: true,
+        publicPath: '/',
+        historyApiFallback: true
+    },
     module: {
         loaders: [
             {
