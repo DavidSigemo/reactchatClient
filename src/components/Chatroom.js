@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Button, Col } from 'react-bootstrap';
 import {Icon} from 'react-fa'
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
 import { NavItem } from 'react-bootstrap';
 
@@ -23,16 +23,17 @@ export default class Chatroom extends React.Component {
         this.state.Locked = this.props.Locked;
         this.state.Password = this.props.Password;
         // this.getConnectionCount = this.getConnectionCount.bind(this);
-        // this.enterRoom = this.enterRoom.bind(this);
+        this.enterRoom = this.enterRoom.bind(this);
     }
 
     // getConnectionCount() {
     //     console.log(this.state.ConnectionCount);
     // }
 
-    // enterRoom(){
-    //     browserHistory.push('/settings');
-    // }
+    enterRoom(roomId){
+        var roomPath = '/chatrooms/room/' + roomId;
+        browserHistory.push(roomPath);
+    }
 
     render() {
         var enterPath = 'room/' + this.state.Id;
@@ -48,10 +49,9 @@ export default class Chatroom extends React.Component {
                     <h4>{(this.state.Description.length > 90) ? this.state.Description.substr(0,90).trim() + '..' : this.state.Description}</h4>
                 </div>
                 <div style={{backgroundColor: randomColor}} className="chatroomTile_Footer">
-                    <Button className="chatroomEnter pull-right" >
-                        <LinkContainer className="chatroomEnterLink" to={{ pathname: enterPath }}>
-                            <NavItem eventKey={1} href="#">Enter</NavItem>
-                        </LinkContainer>
+                    <Button onClick={() => {this.enterRoom(this.state.Id)}} className="chatroomEnter pull-right" >
+                        Enter
+                        <br />
                         <Icon name={this.state.Locked ? 'lock' : 'unlock-alt'} />
                     </Button>
                 </div>

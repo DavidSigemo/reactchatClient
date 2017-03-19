@@ -145,18 +145,18 @@ export default class Layout extends React.Component {
                 <Navbar className="myNav" inverse fixedTop>
                     <Navbar.Header>
                         <Navbar.Brand>
-                            <LinkContainer to={{ pathname: 'home' }}>
-                                <NavItem eventKey={1} href="">Chatrooms</NavItem>
+                            <LinkContainer to="/home">
+                                <NavItem eventKey={1} href="">ReactChat</NavItem>
                             </LinkContainer>
                         </Navbar.Brand>
                         <Navbar.Toggle />
                     </Navbar.Header>
                     <Navbar.Collapse>
                         <Nav>
-                            <LinkContainer to={{ pathname: 'chatrooms' }}>
+                            <LinkContainer to="/chatrooms">
                                 <NavItem eventKey={2} href="#">Chatrooms</NavItem>
                             </LinkContainer>
-                            <LinkContainer to={{ pathname: 'settings' }}>
+                            <LinkContainer to="/settings">
                                 <NavItem eventKey={3} href="#">Users</NavItem>
                             </LinkContainer>
                         </Nav>

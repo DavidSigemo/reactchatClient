@@ -5,16 +5,36 @@ export default class ChatWindow extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: ""
+            id: "",
+            messages: [],
+            messageValue: ""
         }
         this.state.id = this.props.params.id;
+        this.appendChatMessage = this.appendChatMessage.bind(this);
+        this.sendMessage = this.sendMessage.bind(this);
+        this.handleMessageChange = this.handleMessageChange.bind(this);
+    }
+
+    appendChatMessage() {
+        console.log("sent " + this.state.messageValue);
+    }
+
+    sendMessage(event) {
+        if (event.keyCode === 13){
+            event.preventDefault();
+            event.stopPropagation();
+
+            this.appendChatMessage();
+        }
+    }
+    
+    handleMessageChange(event) {
+        this.setState({messageValue: event.target.value})
     }
 
     componentDidMount() {
-        console.log("window test");
-        console.log(window.proxy);
 
-        window.proxy.on('TestChatClient', function (message) {
+        window.proxy.on('HandleMessage', function (message) {
             console.log("testing", message);
         });
 
@@ -28,8 +48,17 @@ export default class ChatWindow extends React.Component {
 
     render() {
         return (
-            <div>
-                <h1>Chatroom {this.state.id}</h1>
+            <div className="chatWindow">
+                <div className="chatWindow_Title">
+                    <h1>Chatroom {this.state.id}</h1>
+                </div>
+                <div className="chatWindow_Body">
+                    <ul id="messageBox">
+                    </ul>
+                </div>
+                <div className="chatWindow_Footer">
+                    <textarea value={this.state.messageValue} onKeyDown={(event) => {this.sendMessage(event)}} onChange={this.handleMessageChange} placeholder="Skicka ett meddelande" className></textarea>
+                </div>
             </div>
         );
     }

@@ -22,8 +22,8 @@ ReactDOM.render(
             <IndexRoute component={Frontpage} />
             <Route name="home" path="/home" component={Frontpage}></Route>
             <Route name="chatrooms" path="/chatrooms" component={Chatrooms}></Route>
+            <Route name="room" path="/chatrooms/room/:id" component={ChatWindow}></Route>
             <Route name="settings" path="/settings" component={Settings}></Route>
-            <Route name="room" path="/room/:id" component={ChatWindow}></Route>
         </Route>
     </Router>, document.getElementById("main")
 );
