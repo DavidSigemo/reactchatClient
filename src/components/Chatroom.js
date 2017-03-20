@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Button, Col } from 'react-bootstrap';
-import {Icon} from 'react-fa'
+import { Icon } from 'react-fa'
 import { Link, browserHistory } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
 import { NavItem } from 'react-bootstrap';
