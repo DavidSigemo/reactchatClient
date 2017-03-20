@@ -14,9 +14,12 @@ export default class ChatWindow extends React.Component {
         this.appendChatMessage = this.appendChatMessage.bind(this);
         this.sendMessage = this.sendMessage.bind(this);
         this.handleMessageChange = this.handleMessageChange.bind(this);
+        this.clearInputBox = this.clearInputBox.bind(this);
     }
 
     appendChatMessage(incomingMessage) {
+        console.log("inside ")
+        console.log(incomingMessage);
         if (incomingMessage !== "") {
 
             var previousMessages = this.state.messages;
@@ -28,10 +31,9 @@ export default class ChatWindow extends React.Component {
 
             }
             previousMessages.push(newItem);
-            this.setState(
-                {
-                    messages: previousMessages
-                });
+            this.setState({
+                messages: previousMessages
+            });
         }
     }
 
@@ -41,26 +43,37 @@ export default class ChatWindow extends React.Component {
             event.stopPropagation();
 
             // this.appendChatMessage(this.state.messageValue);
-
             window.proxy.invoke('SendMessage', this.state.messageValue).done(function () {
-                this.setState(
-                {
+                this.setState({
                     messageValue: ""
-                });
-            }).fail(function (error) {
+                })
+            }.bind(this)).fail(function (error) {
                 console.log('Sending Failed. Error: ' + error);
             });
+            // this.clearInputBox();
         }
     }
 
+
+    clearInputBox() {
+        this.setState({
+            messageValue: ""
+        })
+    }
+
     handleMessageChange(event) {
-        this.setState({messageValue: event.target.value})
+        this.setState({
+            messageValue: event.target.value
+        });
     }
 
     componentDidMount() {
         window.proxy.on('ClientMessage', function (message) {
+            console.log("incoming message");
+            console.log(message);
+
             this.appendChatMessage(message);
-        });
+        }.bind(this));
     }
 
     render() {
