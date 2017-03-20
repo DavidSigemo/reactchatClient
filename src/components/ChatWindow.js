@@ -16,29 +16,22 @@ export default class ChatWindow extends React.Component {
         this.handleMessageChange = this.handleMessageChange.bind(this);
     }
 
-    appendChatMessage() {
-        if (this.state.messageValue !== "") {
+    appendChatMessage(incomingMessage) {
+        if (incomingMessage !== "") {
 
             var previousMessages = this.state.messages;
             var newItem = {
                 id: Date.now(),
                 sender: localStorage.getItem("connectionId"),
-                message: this.state.messageValue
+                message: incomingMessage,
+                color: '#' + Math.floor(Math.random()*16777215).toString(16)
+
             }
             previousMessages.push(newItem);
             this.setState(
                 {
-                    messages: previousMessages,
-                    messageValue: ""
+                    messages: previousMessages
                 });
-            // window.proxy.invoke('SendMessage', this.state.messageValue).done(function () {
-            //     var messageRow = document.createElement("li");
-            //     var messageToAppend = document.createElement("span")
-            //     var a = "<li><p><span>" + localStorage.getItem("connectionId") + " : </span>" + this.state.messageValue + "</p></li>"
-            // }).fail(function (error) {
-            //     console.log('Invocation of Test failed. Error: ' + error);
-            // });
-            // console.log("sent " + this.state.messageValue);
         }
     }
 
@@ -47,32 +40,33 @@ export default class ChatWindow extends React.Component {
             event.preventDefault();
             event.stopPropagation();
 
-            this.appendChatMessage();
+            // this.appendChatMessage(this.state.messageValue);
+
+            window.proxy.invoke('SendMessage', this.state.messageValue).done(function () {
+                this.setState(
+                {
+                    messageValue: ""
+                });
+            }).fail(function (error) {
+                console.log('Sending Failed. Error: ' + error);
+            });
         }
     }
-    
+
     handleMessageChange(event) {
         this.setState({messageValue: event.target.value})
     }
 
     componentDidMount() {
-
-        window.proxy.on('HandleMessage', function (message) {
-            console.log("testing", message);
+        window.proxy.on('ClientMessage', function (message) {
+            this.appendChatMessage(message);
         });
-
-        window.proxy.invoke('TestChatServer', "Asdf").done(function () {
-            console.log('Invocation of Test succeeded');
-        }).fail(function (error) {
-            console.log('Invocation of Test failed. Error: ' + error);
-        });
-
     }
 
     render() {
         var chatmessages = this.state.messages.map((message) => {
             console.log(message);
-            return <ChatMessage key={message.id.toString()} id={message.id} sender={message.sender} message={message.message} />
+            return <ChatMessage key={message.id.toString()} id={message.id} sender={message.sender} message={message.message} color={message.color} />
         });
         return (
             <div className="chatWindow">

@@ -7,19 +7,19 @@ export default class ChatMessage extends React.Component {
         this.state = {
             id: "",
             sender: "",
-            message: ""
+            message: "",
+            color: ""
         }
         this.state.id = this.props.id;
         this.state.sender = this.props.sender;
         this.state.message = this.props.message;
+        this.state.color = this.props.color;
     }
 
     render() {
-        var randomColor = '#' + Math.floor(Math.random()*16777215).toString(16);
-
         return (
             <li id={"message" + this.state.id} className="messageRow">
-                <p className="messageItem"><span style={{color: randomColor}}>{this.state.sender} : </span>{this.state.message}</p>
+                <p className="messageItem"><span style={{color: this.state.color}}>{this.state.sender} : </span>{this.state.message}</p>
             </li>
         );
     }
