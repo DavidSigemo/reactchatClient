@@ -4,9 +4,7 @@ import { Navbar, Nav, NavItem } from 'react-bootstrap';
 
 export default class CreateChatroom extends React.Component {
     constructor(props) {
-        console.log("test");
         super(props);
-
     }
 
     render() {
