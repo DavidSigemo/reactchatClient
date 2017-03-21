@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
 import ConnectionHandler from './ConnectionHandler';
+import LoginModal from './LoginModal';
+import RegisterModal from './RegisterModal';
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem, FormGroup, FormControl, Button, Modal, OverlayTrigger, Popover, Tooltip, Form, Col, ControlLabel, Checkbox, HelpBlock } from 'react-bootstrap';
 require('jquery');
 require('ms-signalr-client');
@@ -13,12 +15,15 @@ export default class Layout extends React.Component {
         super(props);
 
         this.state = {
-            showModal: false,
+            showLoginModal: false,
+            showRegisterModal: false,
             usernameInput: "",
             passwordInput: ""
         };
-        this.open = this.open.bind(this);
-        this.close = this.close.bind(this);
+        this.openLoginModal = this.openLoginModal.bind(this);
+        this.closeLoginModal = this.closeLoginModal.bind(this);
+        this.closeRegisterModal = this.closeRegisterModal.bind(this);
+        this.openRegisterModal = this.openRegisterModal.bind(this);
         this.handleEmailChange = this.handleEmailChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.attemptLogin = this.attemptLogin.bind(this);
@@ -28,12 +33,21 @@ export default class Layout extends React.Component {
         this.activatePasswordValidation = this.activatePasswordValidation.bind(this);
     }
 
-    close() {
-        this.setState({ showModal: false });
+    closeLoginModal() {
+        this.setState({ showLoginModal: false });
     }
 
-    open() {
-        this.setState({ showModal: true });
+    openLoginModal() {
+        this.setState({ showLoginModal: true });
+    }
+
+    closeRegisterModal(){
+        this.setState({ showRegisterModal: false});
+    }
+
+    openRegisterModal(){
+        this.setState({ showRegisterModal: true});
+        this.refs.child.openRegisterModal();
     }
 
     handleEmailChange(e) {
@@ -96,14 +110,18 @@ export default class Layout extends React.Component {
     render() {
         const popover = (
             <Popover id="modal-popover" title="popover">
-                very popover. such engagement
-      </Popover>
+                test popover
+            </Popover>
         );
         const tooltip = (
             <Tooltip id="modal-tooltip">
-                wow.
-      </Tooltip>
+                test tooltip
+            </Tooltip>
         );
+
+        // var registerModal = (
+        //     <RegisterModal show={this.state.showRegisterModal} onHide={this.closeRegisterModal} ref="child" />
+        // );
 
         return (
             <div>
@@ -127,13 +145,15 @@ export default class Layout extends React.Component {
                             </LinkContainer>
                         </Nav>
                         <Nav pullRight>
-                            <NavItem eventKey={1} href="#" onClick={this.open}>Login</NavItem>
-                            <NavItem eventKey={2} href="#">Sign up</NavItem>
+                            <NavItem eventKey={1} href="#" onClick={this.openLoginModal}>Login</NavItem>
+                            <NavItem eventKey={2} href="#" onClick={this.openRegisterModal}>Sign up</NavItem>
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>
 
-                <Modal show={this.state.showModal} onHide={this.close}>
+                <RegisterModal ref="child" />
+
+                <Modal show={this.state.showLoginModal} onHide={this.closeLoginModal}>
                     <Modal.Header closeButton>
                         <Modal.Title>Login</Modal.Title>
                     </Modal.Header>
@@ -175,20 +195,10 @@ export default class Layout extends React.Component {
                     </Modal.Body>
                 </Modal>
 
+                
+
                 <div className="pageContent container">{this.props.children}</div>
             </div>
-            // <div>
-
-            //     <h1>Main Menu</h1>
-            //     <Link to="/">Alla kontakter</Link>
-            //     <br />
-            //     <Link to="create">Skapa ny kontakt</Link>
-            //     <br />
-            //     <Link to="settings">Inställningar</Link>
-            //     <br />
-
-            //     {this.props.children}
-            // </div>);
         );
     }
 }
